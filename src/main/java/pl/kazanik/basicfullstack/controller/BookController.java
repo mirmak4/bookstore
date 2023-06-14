@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.kazanik.basicfullstack.dto.BookDto;
+import pl.kazanik.basicfullstack.repository.BookRepository;
 
 /**
  *
@@ -21,18 +22,25 @@ import pl.kazanik.basicfullstack.dto.BookDto;
 // cross origin for localhost
 public class BookController {
     
+    private BookRepository bookRepository;
+
+    public BookController(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
+    
     @GetMapping(path = "books")
     public ResponseEntity<List<BookDto>> getAllBooks() {
-        BookDto book = BookDto.builder()
-                .title("Lord of the Rings")
-                .build();
-        BookDto book2 = BookDto.builder()
-                .title("Dune")
-                .build();
-        BookDto book3 = BookDto.builder()
-                .title("Hobbit")
-                .build();
-        List<BookDto> books = List.of(book, book2, book3);
+//        BookDto book = BookDto.builder()
+//                .title("Lord of the Rings")
+//                .build();
+//        BookDto book2 = BookDto.builder()
+//                .title("Dune")
+//                .build();
+//        BookDto book3 = BookDto.builder()
+//                .title("Hobbit")
+//                .build();
+//        List<BookDto> books = List.of(book, book2, book3);
+        List<BookDto> books = bookRepository.findAll();
         return ResponseEntity.ok(books);
     }
 }
