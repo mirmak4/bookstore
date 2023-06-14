@@ -4,6 +4,7 @@
  */
 package pl.kazanik.basicfullstack.dto;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,10 +26,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "books")
-public class BookDto {
+public class BookDto implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "NUMERIC(19,0)")
     private Long id;
     
     @Column(name = "title", nullable = false, unique = true)
