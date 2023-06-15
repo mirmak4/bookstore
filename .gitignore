@@ -32,3 +32,4 @@ nbactions.xml
 
 ### VS Code ###
 .vscode/
+/nbproject/

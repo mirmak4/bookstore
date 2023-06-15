@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.kazanik.basicfullstack.dto.BookDto;
 import pl.kazanik.basicfullstack.entity.Book;
 import pl.kazanik.basicfullstack.repository.BookRepository;
 
@@ -28,26 +29,29 @@ public class BookController {
     }
     
     @GetMapping(path = "books")
-    public ResponseEntity<List<Book>> getAllBooks() {
-        Book book = Book.builder()
+    public ResponseEntity<List<BookDto>> getAllBooks() {
+        BookDto book = BookDto.builder()
+                .id(1l)
                 .title("Lord of the Rings")
                 .author("J.R.R. Tolkien")
                 .releaseYear(1951)
                 .description("Trilogy")
                 .build();
-        Book book2 = Book.builder()
+        BookDto book2 = BookDto.builder()
+                .id(2l)
                 .title("Dune")
                 .author("Frank Herbert")
                 .releaseYear(1951)
                 .description("Part I")
                 .build();
-        Book book3 = Book.builder()
+        BookDto book3 = BookDto.builder()
+                .id(3l)
                 .title("Hobbit")
                 .author("J.R.R. Tolkien")
                 .releaseYear(1951)
                 .description("Story")
                 .build();
-        List<Book> books = List.of(book, book2, book3);
+        List<BookDto> books = List.of(book, book2, book3);
 //        List<Book> books = bookRepository.findAll();
         return ResponseEntity.ok(books);
     }
