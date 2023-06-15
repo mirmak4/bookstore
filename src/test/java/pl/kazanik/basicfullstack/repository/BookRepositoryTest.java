@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import pl.kazanik.basicfullstack.dto.BookDto;
+import pl.kazanik.basicfullstack.entity.Book;
 
 /**
  *
@@ -28,7 +28,7 @@ public class BookRepositoryTest {
     @Test
     @Sql(scripts = "classpath:LordOfTheRings.sql")
     public void shouldFetchAllBooksFromDB() {
-        List<BookDto> books = bookRepository.findAll();
+        List<Book> books = bookRepository.findAll();
         int size = books.size();
         Assertions.assertEquals(size, 3);
     }
@@ -37,7 +37,7 @@ public class BookRepositoryTest {
     @Sql(scripts = "classpath:LordOfTheRings.sql")
     public void shouldFindBookByTitle() {
         String bookTitle = "Lord of the Rings: Fellowship of the Ring";
-        List<BookDto> books = bookRepository.findByTitle(bookTitle);
+        List<Book> books = bookRepository.findByTitle(bookTitle);
         int size = books.size();
         Assertions.assertEquals(size, 1);
     }

@@ -4,13 +4,12 @@
  */
 package pl.kazanik.basicfullstack.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.kazanik.basicfullstack.dto.BookDto;
+import pl.kazanik.basicfullstack.entity.Book;
 import pl.kazanik.basicfullstack.repository.BookRepository;
 
 /**
@@ -29,18 +28,27 @@ public class BookController {
     }
     
     @GetMapping(path = "books")
-    public ResponseEntity<List<BookDto>> getAllBooks() {
-//        BookDto book = BookDto.builder()
-//                .title("Lord of the Rings")
-//                .build();
-//        BookDto book2 = BookDto.builder()
-//                .title("Dune")
-//                .build();
-//        BookDto book3 = BookDto.builder()
-//                .title("Hobbit")
-//                .build();
-//        List<BookDto> books = List.of(book, book2, book3);
-        List<BookDto> books = bookRepository.findAll();
+    public ResponseEntity<List<Book>> getAllBooks() {
+        Book book = Book.builder()
+                .title("Lord of the Rings")
+                .author("J.R.R. Tolkien")
+                .releaseYear(1951)
+                .description("Trilogy")
+                .build();
+        Book book2 = Book.builder()
+                .title("Dune")
+                .author("Frank Herbert")
+                .releaseYear(1951)
+                .description("Part I")
+                .build();
+        Book book3 = Book.builder()
+                .title("Hobbit")
+                .author("J.R.R. Tolkien")
+                .releaseYear(1951)
+                .description("Story")
+                .build();
+        List<Book> books = List.of(book, book2, book3);
+//        List<Book> books = bookRepository.findAll();
         return ResponseEntity.ok(books);
     }
 }
