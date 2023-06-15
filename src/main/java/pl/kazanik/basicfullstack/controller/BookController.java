@@ -30,28 +30,6 @@ public class BookController {
     
     @GetMapping(path = "books")
     public ResponseEntity<BooksResponse> getAllBooks() {
-//        BookDto book = BookDto.builder()
-//                .id(1l)
-//                .title("Lord of the Rings")
-//                .author("J.R.R. Tolkien")
-//                .releaseYear(1951)
-//                .description("Trilogy")
-//                .build();
-//        BookDto book2 = BookDto.builder()
-//                .id(2l)
-//                .title("Dune")
-//                .author("Frank Herbert")
-//                .releaseYear(1951)
-//                .description("Part I")
-//                .build();
-//        BookDto book3 = BookDto.builder()
-//                .id(3l)
-//                .title("Hobbit")
-//                .author("J.R.R. Tolkien")
-//                .releaseYear(1951)
-//                .description("Story")
-//                .build();
-//        List<BookDto> books = List.of(book, book2, book3);
         List<BookDto> books = bookService.fetchAllBooks();
         BooksResponse res = new BooksResponse();
         res.setBooks(books);
