@@ -24,7 +24,7 @@ public class BookRepositoryTest {
     
     @Autowired
     private BookRepository bookRepository;
-    
+  
     @Test
     @Sql(scripts = "classpath:LordOfTheRings.sql")
     public void shouldFetchAllBooksFromDB() {
