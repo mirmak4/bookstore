@@ -24,7 +24,7 @@ import pl.kazanik.basicfullstack.response.BooksResponse;
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 //@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 //@AutoConfigureTestDatabase(replace = Replace.ANY)
-public class BookControllerTest {
+public class BookControllerIT {
     
     @LocalServerPort
     private int port;
