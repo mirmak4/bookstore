@@ -13,9 +13,11 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>basicfullstack</name>
     <description>Demo project for Spring Boot and React Hooks on front</description>
+    
     <properties>
         <java.version>17</java.version>
     </properties>
+    
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -78,7 +80,25 @@
             <artifactId>modelmapper</artifactId>
             <version>3.1.1</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.6.1</version>
+        </dependency>
+         <!--https://mvnrepository.com/artifact/io.springfox/springfox-swagger2--> 
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.6.3</version>
+        </dependency>
     </dependencies>
+    
     <profiles>
         <profile>
            <id>unit-test</id>
@@ -113,6 +133,7 @@
            </build>
         </profile>
     </profiles>
+    
     <build>
         <plugins>
             <plugin>
