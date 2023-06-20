@@ -141,12 +141,19 @@
         <!--  env  -->
         <profile>
             <id>dev</id>
+            <properties>
+                <spring.profiles.active>dev</spring.profiles.active>
+                <activatedProperties>dev</activatedProperties>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <spring.profiles.active>dev</spring.profiles.active>
-                <activatedProperties>dev</activatedProperties>
+                <spring.profiles.active>test</spring.profiles.active>
+                <activatedProperties>test</activatedProperties>
             </properties>
         </profile>
         <profile>
