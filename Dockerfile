@@ -11,4 +11,4 @@ RUN ./mvnw dependency:resolve
 
 COPY src ./src
 EXPOSE 8080
-CMD ["./mvnw", "spring-boot:run"]
+CMD ["./mvnw", "spring-boot:run", "spring-boot.run.profiles=prod"]
