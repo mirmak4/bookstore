@@ -97,6 +97,12 @@
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>1.6.3</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.6.0</version>
+        </dependency>
     </dependencies>
     
     <profiles>
@@ -131,6 +137,24 @@
                  </plugin>
               </plugins>
            </build>
+        </profile>
+        <!--  env  -->
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spring.profiles.active>dev</spring.profiles.active>
+                <activatedProperties>dev</activatedProperties>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <spring.profiles.active>prod</spring.profiles.active>
+                <activatedProperties>prod</activatedProperties>
+            </properties>
         </profile>
     </profiles>
     
