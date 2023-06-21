@@ -34,3 +34,6 @@ nb-*.xml
 ### VS Code ###
 .vscode/
 /nbproject/
+
+### Run Scripts ###
+run_script*
