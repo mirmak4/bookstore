@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +25,8 @@ import pl.kazanik.basicfullstack.service.BookService;
 @Api(value = "Book Api", tags = "Book Api", produces = "application/json")
 @RestController
 @RequestMapping(path = "api/v1")
-// cross origin for localhost
+// cross origin configuration in CrossOriginConfiguration bean
+// for localhost only for dev and test profiles
 public class BookController {
     
     private BookService bookService;
