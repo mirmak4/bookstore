@@ -14,15 +14,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author miron.maksymiuk
  */
 @Configuration
-@Profile(value = {"dev", "test"})
-public class CrossOriginConfiguration implements WebMvcConfigurer {
-
+@Profile(value = {"prod"})
+public class CrossOriginProdConfiguration implements WebMvcConfigurer {
+    
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry
                 .addMapping("/**")
-                .allowedOrigins("http://localhost:3000", "https://bookstoreclientdev-mironmaksymiuk.b4a.run");
+                .allowedOrigins("https://bookstoreclient-mironmaksymiuk.b4a.run");
     }
-    
-    
 }
