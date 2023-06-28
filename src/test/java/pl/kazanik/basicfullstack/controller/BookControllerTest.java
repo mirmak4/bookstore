@@ -10,6 +10,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -19,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import pl.kazanik.basicfullstack.dto.BookDto;
 import pl.kazanik.basicfullstack.response.BooksResponse;
 import pl.kazanik.basicfullstack.service.BookService;
+import static org.mockito.ArgumentMatchers.anyString;
 
 /**
  *
@@ -52,6 +54,14 @@ public class BookControllerTest {
     public void testGetAllBooks() {
         Mockito.doReturn(books).when(bookService).fetchAllBooks();
         ResponseEntity<BooksResponse> res = bookController.getAllBooks();
+        List<BookDto> books = res.getBody().getBooks();
+        Assertions.assertThat(3).isEqualTo(books.size());
+    }
+    
+    @Test
+    public void testGetAllBooksByTitle() {
+        Mockito.doReturn(books).when(bookService).fetchBooksByTitle(anyString());
+        ResponseEntity<BooksResponse> res = bookController.getBooksByTitle("test title");
         List<BookDto> books = res.getBody().getBooks();
         Assertions.assertThat(3).isEqualTo(books.size());
     }

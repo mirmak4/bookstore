@@ -18,7 +18,10 @@ import pl.kazanik.basicfullstack.repository.BookRepository;
 import org.modelmapper.ModelMapper;
 import pl.kazanik.basicfullstack.dto.BookDto;
 import static org.assertj.core.api.Assertions.assertThat;
+import org.mockito.ArgumentMatchers;
 import org.mockito.MockitoAnnotations;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.ArgumentMatchers.anyString;
 
 /**
  *
@@ -65,13 +68,13 @@ public class BookServiceTest {
      */
     @Test
     public void testFetchAllBooks() {
-        Mockito.doReturn(bookDtos.get(0))
+        doReturn(bookDtos.get(0))
                 .when(mapper).map(books.get(0), BookDto.class);
-        Mockito.doReturn(bookDtos.get(1))
+        doReturn(bookDtos.get(1))
                 .when(mapper).map(books.get(1), BookDto.class);
-        Mockito.doReturn(bookDtos.get(2))
+        doReturn(bookDtos.get(2))
                 .when(mapper).map(books.get(2), BookDto.class);
-        Mockito.doReturn(books)
+        doReturn(books)
                 .when(bookRepository).findAll();
         List<BookDto> fetchedBooks = bookService.fetchAllBooks();
         assertThat(fetchedBooks.size()).isEqualTo(3);
@@ -90,6 +93,25 @@ public class BookServiceTest {
             .hasFieldOrPropertyWithValue("author", "J.R.R. Tolkien")
             .hasFieldOrPropertyWithValue("releaseYear", 1947)
             .hasFieldOrPropertyWithValue("description", "Story");
+    }
+    
+    @Test
+    public void testFetchBooksByTitleIgnoreCase() {
+        // given
+        doReturn(books)
+                .when(bookRepository).findByTitleIgnoreCase(anyString());
+        doReturn(bookDtos.get(0))
+                .when(mapper).map(books.get(0), BookDto.class);
+        doReturn(bookDtos.get(1))
+                .when(mapper).map(books.get(1), BookDto.class);
+        doReturn(bookDtos.get(2))
+                .when(mapper).map(books.get(2), BookDto.class);
+        
+        // when
+        List<BookDto> fetchedBooks = bookService.fetchBooksByTitle("Test title");
+        
+        // then
+        assertThat(fetchedBooks.size()).isEqualTo(books.size());
     }
     
     private Book getBook(String title, String author, int year, String description) {
