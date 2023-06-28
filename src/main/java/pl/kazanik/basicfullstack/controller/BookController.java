@@ -12,6 +12,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.kazanik.basicfullstack.dto.BookDto;
@@ -44,6 +45,22 @@ public class BookController {
     @GetMapping(path = "books")
     public ResponseEntity<BooksResponse> getAllBooks() {
         List<BookDto> books = bookService.fetchAllBooks();
+        BooksResponse res = new BooksResponse();
+        res.setBooks(books);
+        return ResponseEntity.ok(res);
+    }
+
+    @ApiOperation(value = "Get list of books by title", response = BooksResponse.class, produces = "application/json")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Successfully fetched books by title"),
+        @ApiResponse(code = 403, message = "Request forbidden"),
+        @ApiResponse(code = 404, message = "Resource not found")
+    })
+    @GetMapping(path = "books/{title}")
+    public ResponseEntity<BooksResponse> getBooksByTitle(
+            @PathVariable("title") String title) {
+        
+        List<BookDto> books = bookService.fetchBooksByTitle(title);
         BooksResponse res = new BooksResponse();
         res.setBooks(books);
         return ResponseEntity.ok(res);

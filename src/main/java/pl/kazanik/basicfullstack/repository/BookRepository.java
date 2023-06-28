@@ -6,6 +6,7 @@ package pl.kazanik.basicfullstack.repository;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import pl.kazanik.basicfullstack.entity.Book;
 
@@ -14,7 +15,11 @@ import pl.kazanik.basicfullstack.entity.Book;
  * @author miron.maksymiuk
  */
 @Repository
+// extends CrudRepository ???
 public interface BookRepository extends JpaRepository<Book, Long>{
+//public interface BookRepository extends CrudRepository<Book, Long>{
     
-    List<Book> findByTitle(String title);
+    Iterable<Book> findByTitle(String title);
+    
+    Iterable<Book> findByTitleIgnoreCase(String title);
 }

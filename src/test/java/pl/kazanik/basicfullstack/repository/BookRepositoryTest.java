@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pl.kazanik.basicfullstack.entity.Book;
+import pl.kazanik.basicfullstack.testutils.TestUtils;
 
 /**
  *
@@ -28,17 +29,26 @@ public class BookRepositoryTest {
     @Test
     @Sql(scripts = "classpath:LordOfTheRings.sql")
     public void shouldFetchAllBooksFromDB() {
-        List<Book> books = bookRepository.findAll();
-        int size = books.size();
-        Assertions.assertEquals(size, 3);
+        Iterable<Book> books = bookRepository.findAll();
+        long size = TestUtils.getCrudRepoIterableSize(books);
+        Assertions.assertEquals(3l, size);
     }
     
     @Test
     @Sql(scripts = "classpath:LordOfTheRings.sql")
     public void shouldFindBookByTitle() {
         String bookTitle = "Lord of the Rings: Fellowship of the Ring";
-        List<Book> books = bookRepository.findByTitle(bookTitle);
-        int size = books.size();
-        Assertions.assertEquals(size, 1);
+        Iterable<Book> books = bookRepository.findByTitle(bookTitle);
+        long size = TestUtils.getCrudRepoIterableSize(books);
+        Assertions.assertEquals(1l, size);
+    }
+    
+    @Test
+    @Sql(scripts = "classpath:LordOfTheRings.sql")
+    public void shouldFindBookByTitleIgnoreCase() {
+        String bookTitle = "lord of the Rings: Fellowship of the Ring";
+        Iterable<Book> books = bookRepository.findByTitleIgnoreCase(bookTitle);
+        long size = TestUtils.getCrudRepoIterableSize(books);
+        Assertions.assertEquals(1l, size);
     }
 }

@@ -7,6 +7,8 @@ package pl.kazanik.basicfullstack.service;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import pl.kazanik.basicfullstack.dto.BookDto;
@@ -29,13 +31,26 @@ public class BookService {
     }
     
     public List<BookDto> fetchAllBooks() {
-        List<Book> books = bookRepository.findAll();
-        return books.stream()
+        Iterable<Book> books = bookRepository.findAll();
+        Stream<Book> booksStream = convertIterableToStream(books);
+        return booksStream
+                .map(convertBookModelToBookDto())
+                .collect(Collectors.toList());
+    }
+    
+    public List<BookDto> fetchBooksByTitle(String title) {
+        Iterable<Book> books = bookRepository.findByTitleIgnoreCase(title);
+        Stream<Book> booksStream = convertIterableToStream(books);
+        return booksStream
                 .map(convertBookModelToBookDto())
                 .collect(Collectors.toList());
     }
     
     private Function<Book, BookDto> convertBookModelToBookDto() {
         return book -> modelMapper.map(book, BookDto.class);
+    }
+    
+    private Stream convertIterableToStream(Iterable iter) {
+        return StreamSupport.stream(iter.spliterator(), true);
     }
 }
