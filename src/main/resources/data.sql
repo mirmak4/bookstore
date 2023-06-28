@@ -7,5 +7,4 @@ insert into books (id, title, description, author, release_year) values
     (6, 'Children of Dune', 'First edition: New York: G.P. Putnams Sons', 'Frank Herbert', 1976),
     (7, 'God Emperor of Dune', 'First edition: New York: G.P. Putnams Sons', 'Frank Herbert', 1981),
     (8, 'Heretics of Dune', 'First edition: New York: G.P. Putnams Sons', 'Frank Herbert', 1984),
-    (9, 'Chapterhouse: Dune', 'First edition: New York: G.P. Putnams Sons', 'Frank Herbert', 1985),
-;
+    (9, 'Chapterhouse: Dune', 'First edition: New York: G.P. Putnams Sons', 'Frank Herbert', 1985);
