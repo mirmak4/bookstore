@@ -16,7 +16,8 @@ import pl.kazanik.basicfullstack.entity.Book;
  */
 @Repository
 // extends CrudRepository ???
-public interface BookRepository extends JpaRepository<Book, Long>{
+//public interface BookRepository extends JpaRepository<Book, Long>{
+public interface BookRepository extends JpaRepository<Book, Integer>{
 //public interface BookRepository extends CrudRepository<Book, Long>{
     
     Iterable<Book> findByTitle(String title);

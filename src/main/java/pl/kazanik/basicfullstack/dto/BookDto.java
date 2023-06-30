@@ -30,7 +30,8 @@ public class BookDto {
             notes = "Database generated book id",
             required = true
     )
-    private Long id;
+//    private Long id;
+    private Integer id;
     
     @ApiModelProperty(
             value = "title",
