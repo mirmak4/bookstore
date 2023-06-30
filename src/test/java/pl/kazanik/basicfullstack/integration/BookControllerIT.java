@@ -5,17 +5,16 @@
 package pl.kazanik.basicfullstack.integration;
 
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.jdbc.Sql;
 import pl.kazanik.basicfullstack.BasicfullstackApplication;
 import pl.kazanik.basicfullstack.dto.BookDto;
 import pl.kazanik.basicfullstack.response.BooksResponse;
 import static org.assertj.core.api.Assertions.assertThat;
+import org.springframework.boot.web.server.LocalServerPort;
 
 /**
  *

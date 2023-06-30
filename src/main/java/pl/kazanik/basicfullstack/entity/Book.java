@@ -30,8 +30,10 @@ public class Book implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "NUMERIC(19,0)")
-    private Long id;
+//    @Column(columnDefinition = "NUMERIC(19,0)")
+//    private Long id;
+    @Column
+    private Integer id;
     
     @Column(name = "title", nullable = false, unique = true)
     private String title;

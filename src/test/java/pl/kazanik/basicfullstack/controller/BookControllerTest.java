@@ -38,9 +38,9 @@ public class BookControllerTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        BookDto bookDto = new BookDto(1l, "Lord of the Rings", "Trilogy", "J.R.R. Tolkien", 1951);
-        BookDto bookDto2 = new BookDto(2l, "Dune", "Part I", "Frank Herbert", 1960);
-        BookDto bookDto3 = new BookDto(3l, "Hobbit", "Story", "J.R.R. Tolkien", 1947);
+        BookDto bookDto = new BookDto(1, "Lord of the Rings", "Trilogy", "J.R.R. Tolkien", 1951);
+        BookDto bookDto2 = new BookDto(2, "Dune", "Part I", "Frank Herbert", 1960);
+        BookDto bookDto3 = new BookDto(3, "Hobbit", "Story", "J.R.R. Tolkien", 1947);
         books = new ArrayList<>();
         books.add(bookDto);
         books.add(bookDto2);
