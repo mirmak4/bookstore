@@ -9,13 +9,10 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import pl.kazanik.basicfullstack.security.ApiAuthenticationManager;
+import pl.kazanik.basicfullstack.security.exception.ApiAuthenticationException;
 
 /**
  *
@@ -25,12 +22,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-    private final JwtTokenUtils jwtTokenUtils;
-    private final JwtUserDetailsService userDetailsService;
+    private final ApiAuthenticationManager apiAuthenticationManager;
 
-    public JwtRequestFilter(JwtTokenUtils jwtUtils, JwtUserDetailsService userDetailsService) {
-        this.jwtTokenUtils = jwtUtils;
-        this.userDetailsService = userDetailsService;
+    public JwtRequestFilter(ApiAuthenticationManager apiAuthenticationManager) {
+        this.apiAuthenticationManager = apiAuthenticationManager;
     }
     
     @Override
@@ -38,32 +33,28 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             HttpServletRequest request, HttpServletResponse response, 
             FilterChain filterChain) throws ServletException, IOException {
         
-        String tokenHeader = request.getHeader("Authorization");
-        String userName = null;
-        String token = null;
-        
-        if (jwtTokenUtils.validateTokenHeader(token, tokenHeader)) {
-            userName = jwtTokenUtils.extractUserNameFromToken(tokenHeader);
-            token = jwtTokenUtils.extractTokenFromTokenHeader(tokenHeader);
-        }
-        else {
-            throw new RuntimeException("bearer string in token not found");
-        }
-        
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        
-        if (userName != null /* && auth != null */ ) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
-            
-            if (jwtTokenUtils.validateJwtToken(token, userDetails)) {
-                UsernamePasswordAuthenticationToken authToken = 
-                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authToken);
-            }
+        try {
+            apiAuthenticationManager.validateRequest(request);
+        } catch (ApiAuthenticationException ex) {
+            final String errorMessage = errorMessageBuilder(request.getRequestURI(), ex.getMessage());
+            response.setContentType("application/json");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write(errorMessage);
         }
         
         filterChain.doFilter(request, response);
+    }
+    
+    private String errorMessageBuilder(String requestUrl, String exMessage) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{ ");
+        sb.append("\"error\": \"Unauthorized\" ");
+        sb.append("\"message\": \"" + exMessage + "\"");
+        sb.append("\"path\": \"")
+          .append(requestUrl)
+          .append("\"");
+        sb.append("} ");
+        return sb.toString();
     }
     
 }

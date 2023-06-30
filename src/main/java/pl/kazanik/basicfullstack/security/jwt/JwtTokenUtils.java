@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import pl.kazanik.basicfullstack.security.exception.ApiAuthenticationException;
 
 /**
  *
@@ -63,7 +64,7 @@ public class JwtTokenUtils implements Serializable {
         return false;
     }
     
-    public String extractUserNameFromToken(String tokenHeader) {
+    public String extractUserNameFromToken(String tokenHeader) throws ApiAuthenticationException {
         String token = extractTokenFromTokenHeader(tokenHeader);
             
         try {
@@ -71,11 +72,11 @@ public class JwtTokenUtils implements Serializable {
             return userName;
         }
         catch (IllegalArgumentException e) {
-            throw new RuntimeException(
+            throw new ApiAuthenticationException(
                     "illegal argument when filtering jwt request", e);
         }
         catch (ExpiredJwtException e) {
-            throw new RuntimeException("jwt token expired", e);
+            throw new ApiAuthenticationException("jwt token expired", e);
         }
     }
     
