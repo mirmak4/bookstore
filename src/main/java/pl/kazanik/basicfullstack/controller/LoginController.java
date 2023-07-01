@@ -10,6 +10,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,9 @@ import pl.kazanik.basicfullstack.security.jwt.JwtUserDetailsService;
 
 @RestController
 @RequestMapping(path = "login")
+@CrossOrigin(origins = { "http://localhost:3000", 
+    "https://bookstoreclientdev-mironmaksymiuk.b4a.run",
+    "https://bookstoreclient-mironmaksymiuk.b4a.run"})
 public class LoginController {
     
     private final AuthenticationManager authenticationManager;

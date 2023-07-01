@@ -38,8 +38,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final String LOGIN_MATCHER_PATH = "/**/login/**";
     private static final String BOOKS_MATCHER_PATH = "/**/books/**";
 
-    public SecurityConfiguration(UserDetailsService userDetailsService, JwtRequestFilter jwtRequestFilter,
+    public SecurityConfiguration(
+            UserDetailsService userDetailsService, JwtRequestFilter jwtRequestFilter,
             JwtAuthEntryPoint authEntryPoint, PasswordEncoder passwordEncoder) {
+        
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
         this.jwtRequestFilter = jwtRequestFilter;
@@ -73,6 +75,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         
         // instead of specifying what should not pass, specify just what should pass
         http
+                .cors()
+                .and()
                 .antMatcher(BOOKS_MATCHER_PATH)
                 .authorizeRequests()
                 .anyRequest()
