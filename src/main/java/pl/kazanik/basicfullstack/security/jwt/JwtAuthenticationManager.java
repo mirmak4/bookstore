@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import pl.kazanik.basicfullstack.security.ApiAuthenticationManager;
@@ -45,7 +46,13 @@ public class JwtAuthenticationManager implements ApiAuthenticationManager {
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         
         if (userName != null /* && auth != null */ ) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
+            UserDetails userDetails = null;
+            
+            try {
+                userDetails = userDetailsService.loadUserByUsername(userName);
+            } catch (UsernameNotFoundException ex) {
+                throw new ApiAuthenticationException(ex.getMessage(), ex);
+            }
             
             if (jwtTokenUtils.validateJwtToken(token, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = 
