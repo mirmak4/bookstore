@@ -8,6 +8,8 @@ import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 //import lombok.NoArgsConstructor;
 
 /**
@@ -17,9 +19,16 @@ import lombok.Getter;
 
 //@Data
 @AllArgsConstructor
-//@NoArgsConstructor
+@NoArgsConstructor
 @Getter
 public class JwtAuthResponse implements Serializable {
     
     private String token;
+    @Setter
+    private String message;
+
+    public JwtAuthResponse(String token) {
+        this.token = token;
+    }
+    
 }

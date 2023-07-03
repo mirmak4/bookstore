@@ -4,12 +4,15 @@
  */
 package pl.kazanik.basicfullstack.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,9 +26,12 @@ import pl.kazanik.basicfullstack.security.jwt.JwtUserDetailsService;
  *
  * @author miron.maksymiuk
  */
-
+//@ExceptionHandler(DisabledException.class)
 @RestController
 @RequestMapping(path = "login")
+@CrossOrigin(origins = { "http://localhost:3000", 
+    "https://bookstoreclientdev-mironmaksymiuk.b4a.run",
+    "https://bookstoreclient-mironmaksymiuk.b4a.run"})
 public class LoginController {
     
     private final AuthenticationManager authenticationManager;
@@ -47,15 +53,15 @@ public class LoginController {
                     new UsernamePasswordAuthenticationToken(
                             request.getUsername(), request.getPassword()));
         }
-        catch (DisabledException e) {
-            throw new RuntimeException("USER_DISABLED", e);
-        }
-        catch (BadCredentialsException ex) {
-            throw new RuntimeException("username or password is incorrect", ex);
+        catch (DisabledException | BadCredentialsException e) {
+//            throw new RuntimeException("USER_DISABLED", e);
+            JwtAuthResponse res = new JwtAuthResponse();
+            res.setMessage("Unauthorized");
+            return new ResponseEntity<>(res, HttpStatus.UNAUTHORIZED);
         }
         UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(
                 request.getUsername());
         String jwtToken = jwtTokenUtils.generateJwtToken(userDetails);
-        return ResponseEntity.ok(new JwtAuthResponse(jwtToken));
+        return ResponseEntity.ok(new JwtAuthResponse(jwtToken, "Success"));
     }
 }
